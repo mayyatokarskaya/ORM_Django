@@ -2,7 +2,7 @@
 name = "ORM_Django"
 version = "0.2.0"
 description = ""
-authors = ["mayya.tokarskaya@gmail.com"]
+authors = ["Mayya Tokarskaya <mayya.tokarskaya@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
