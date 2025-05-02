@@ -1,0 +1,26 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+        "name": "Электроника",
+        "description": "Гаджеты и бытовые приборы"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+        "name": "Книги",
+        "description": "Художественная литература"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+        "name": "Игрушки",
+        "description": "Мягкие игрушки"
+    }
+}
+]
