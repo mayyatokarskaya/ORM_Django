@@ -1,4 +1,4 @@
-# Django Catalog Project
+# ORM_Django Catalog Project
 
 Простой веб-каталог на Django с главной страницей и разделом контактов.
 
