@@ -1,7 +1,7 @@
 [
 {
     "model": "catalog.category",
-    "pk": 3,
+    "pk": 6,
     "fields": {
         "name": "Электроника",
         "description": "Гаджеты и бытовые приборы"
@@ -9,7 +9,7 @@
 },
 {
     "model": "catalog.category",
-    "pk": 4,
+    "pk": 7,
     "fields": {
         "name": "Книги",
         "description": "Художественная литература"
@@ -17,7 +17,7 @@
 },
 {
     "model": "catalog.category",
-    "pk": 5,
+    "pk": 8,
     "fields": {
         "name": "Игрушки",
         "description": "Мягкие игрушки"
