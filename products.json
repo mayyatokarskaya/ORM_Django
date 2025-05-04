@@ -83,7 +83,7 @@
     "fields": {
       "name": "Розовый слон",
       "description": "Мягкая плюшевая игрушка",
-      "image": "media/products/pink elephant.jpg",
+      "image": "products/pink elephant.jpg",
       "category": 8,
       "price": "889.99",
       "created_at": "2025-05-02T14:05:17.094Z",
@@ -96,7 +96,7 @@
     "fields": {
       "name": "Ёжик",
       "description": "Ёжик войлочный",
-      "image": "",
+      "image": "products/hedgehog.jpg",
       "category": 8,
       "price": "1699.00",
       "created_at": "2025-05-02T14:06:16.021Z",
@@ -109,7 +109,7 @@
     "fields": {
       "name": "Чеширский кот",
       "description": "Игрушка из фетра",
-      "image": "",
+      "image": "products/cheshir.jpg",
       "category": 8,
       "price": "3499.00",
       "created_at": "2025-05-02T14:13:00.000Z",
