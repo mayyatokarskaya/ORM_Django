@@ -5,7 +5,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("catalog.urls", namespace="catalog")),  # Убрал слеш в namespace
+    path("", include("catalog.urls", namespace="catalog")),
 ]
 
 # Добавляем обработку медиафайлов только в режиме DEBUG
