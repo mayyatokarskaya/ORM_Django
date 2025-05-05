@@ -8,7 +8,7 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    {% include 'catalog/includes/header.html' %}
+    {% include 'header.html' %}
 
     <main class="container mt-4">
         {% block content %}
@@ -16,7 +16,7 @@
         {% endblock %}
     </main>
 
-    {% include 'catalog/includes/footer.html' %}
+    {% include 'footer.html' %}
 
     <script src="/static/js/bootstrap.bundle.min.js"></script>
     {% block extra_js %}{% endblock %}
