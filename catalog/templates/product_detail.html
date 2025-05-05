@@ -1,27 +1,25 @@
-<!-- templates/products/product_detail.html -->
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ product.name }}</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container mt-5">
-    <h1>{{ product.name }}</h1>
+{% extends 'catalog/base.html' %}
 
-    {% if product.image %}
-       <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="max-width: 200px;">
+{% block title %}{{ product.name }}{% endblock %}
 
-    {% endif %}
+{% block header_title %}{{ product.name }}{% endblock %}
+{% block header_subtitle %}{{ product.category.name }}{% endblock %}
 
-    <p><strong>Описание:</strong> {{ product.description }}</p>
-    <p><strong>Категория:</strong> {{ product.category }}</p>
-    <p><strong>Цена:</strong> {{ product.price }} ₽</p>
-    <p><strong>Создан:</strong> {{ product.created_at|date:"d.m.Y H:i" }}</p>
-    <p><strong>Обновлён:</strong> {{ product.updated_at|date:"d.m.Y H:i" }}</p>
-
-    <a href="/" class="btn btn-primary mt-3">Назад</a>
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}">
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <h3>Описание</h3>
+        <p>{{ product.description }}</p>
+        <div class="details mt-4">
+            <p><strong>Цена:</strong> {{ product.price }} ₽</p>
+            <p><strong>Дата добавления:</strong> {{ product.created_at|date:"d.m.Y" }}</p>
+        </div>
+        <a href="{% url 'catalog:home' %}" class="btn btn-outline-primary mt-3">Назад к списку</a>
+    </div>
 </div>
-</body>
-</html>
+{% endblock %}
