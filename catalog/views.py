@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -5,8 +6,13 @@ from catalog.models import Product
 
 
 def home(request):
-    products = Product.objects.all()  # Получаем все товары
-    return render(request, "home.html", {"products": products})
+    product_list = Product.objects.all()
+    paginator = Paginator(product_list, 4)
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "home.html", {"page_obj": page_obj})
 
 
 def contacts(request):
