@@ -5,7 +5,8 @@ from catalog.models import Product
 
 
 def home(request):
-    return render(request, "home.html")
+    products = Product.objects.all()  # Получаем все товары
+    return render(request, "home.html", {"products": products})
 
 
 def contacts(request):
