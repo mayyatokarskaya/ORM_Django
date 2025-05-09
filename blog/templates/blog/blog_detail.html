@@ -2,10 +2,14 @@
 {% block content %}
   <h1>{{ post.title }}</h1>
   <p>{{ post.content }}</p>
-  {% if post.preview %}
-    <img src="{{ post.preview.url }}" alt="preview" style="max-width: 300px;">
-  {% endif %}
+{% if post.preview_image %}
+    <img src="{{ post.preview_image.url }}" alt="Preview image" style="max-width: 300px;">
+{% else %}
+    <p>Изображение не доступно.</p>
+{% endif %}
   <p>Просмотров: {{ post.views_count }}</p>
   <a href="{% url 'blog:blog_update' post.pk %}">Редактировать</a> |
   <a href="{% url 'blog:blog_delete' post.pk %}">Удалить</a>
 {% endblock %}
+
+

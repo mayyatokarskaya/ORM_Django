@@ -20,14 +20,14 @@ class BlogDetailView(DetailView):
 class BlogCreateView(CreateView):
     model = BlogPost
     template_name = "blog/blog_form.html"
-    fields = ["title", "content", "preview", "is_published"]
+    fields = ["title", "content", "preview_image", "is_published"]
     success_url = reverse_lazy("blog:blog_list")
 
 
 class BlogUpdateView(UpdateView):
     model = BlogPost
     template_name = "blog/blog_form.html"
-    fields = ["title", "content", "preview", "is_published"]
+    fields = ["title", "content", "preview_image", "is_published"]
     success_url = reverse_lazy("blog:blog_list")
 
 
