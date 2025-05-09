@@ -46,8 +46,6 @@ class BlogUpdateView(UpdateView):
         return reverse_lazy("blog:blog_detail", kwargs={"pk": self.object.pk})
 
 
-
-
 class BlogDeleteView(DeleteView):
     model = BlogPost
     template_name = "blog/blog_confirm_delete.html"
