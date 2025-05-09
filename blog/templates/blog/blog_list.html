@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Блог</h1>
+  <a href="{% url 'blog:blog_create' %}">Создать новую запись</a>
+  <ul>
+    {% for post in posts %}
+      <li>
+        <a href="{% url 'blog:blog_detail' post.pk %}">{{ post.title }}</a>
+        {% if post.is_published %}(опубликовано){% else %}(не опубликовано){% endif %}
+      </li>
+    {% empty %}
+      <li>Нет записей</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
