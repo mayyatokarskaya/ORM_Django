@@ -6,6 +6,7 @@ from django.urls import include, path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("catalog.urls")),
+    path("blogs/", include("blog.urls", namespace="blog")),
 ]
 
 # Добавляем обработку медиафайлов только в режиме DEBUG
