@@ -1,8 +1,9 @@
-from django.views.generic import ListView, DetailView, View, TemplateView
-from django.shortcuts import render
-from django.http import HttpResponse
-from .models import Product
 from django.core.paginator import Paginator
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views.generic import DetailView, ListView, TemplateView, View
+
+from .models import Product
 
 
 class HomePageView(ListView):

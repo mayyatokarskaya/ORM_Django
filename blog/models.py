@@ -1,12 +1,17 @@
 from django.db import models
 
+
 class BlogPost(models.Model):
     title = models.CharField(max_length=255, verbose_name="Заголовок")
     content = models.TextField(verbose_name="Содержимое")
-    preview_image = models.ImageField(upload_to='blog_previews/', null=True, blank=True, verbose_name="Превью")
+    preview_image = models.ImageField(
+        upload_to="blog_previews/", null=True, blank=True, verbose_name="Превью"
+    )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     is_published = models.BooleanField(default=False, verbose_name="Публикация")
-    view_count = models.PositiveIntegerField(default=0, verbose_name="Количество просмотров")
+    view_count = models.PositiveIntegerField(
+        default=0, verbose_name="Количество просмотров"
+    )
 
     class Meta:
         verbose_name = "Блоговая запись"
