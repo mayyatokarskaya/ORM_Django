@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Удалить "{{ object.title }}"?</h1>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Подтвердить</button>
+    <a href="{% url 'blog:blog_list' %}">Отмена</a>
+  </form>
+{% endblock %}
