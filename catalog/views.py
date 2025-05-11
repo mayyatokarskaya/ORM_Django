@@ -14,7 +14,6 @@ from .forms import ProductForm  # подключаем форму
 class HomePageView(ListView):
     model = Product
     template_name = "home.html"
-    context_object_name = "page_obj"
     paginate_by = 4
 
 
