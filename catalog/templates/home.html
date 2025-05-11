@@ -20,6 +20,8 @@
             <div class="card-footer">
                 <small class="text-muted">₽ {{ product.price }}</small>
                 <a href="{% url 'catalog:product_detail' pk=product.pk %}" class="btn btn-sm btn-primary">Подробнее</a>
+                <a href="{% url 'catalog:product_update' pk=product.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
+                <a href="{% url 'catalog:product_delete' pk=product.pk %}" class="btn btn-sm btn-danger">Удалить</a>
             </div>
         </div>
     </div>
