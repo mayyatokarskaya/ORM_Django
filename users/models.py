@@ -28,7 +28,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractUser):
-    username = None  # Отключаем username, если не нужен
+    username = None  # Отключаем username
     email = models.EmailField(unique=True, verbose_name="Email")
 
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, verbose_name="Аватар")
@@ -38,7 +38,7 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager()  # ← Обязательно добавляем менеджер!
+    objects = CustomUserManager()
 
     def __str__(self):
         return self.email
