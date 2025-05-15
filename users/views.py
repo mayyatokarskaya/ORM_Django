@@ -3,6 +3,8 @@ from django.views.generic.edit import CreateView
 from django.core.mail import send_mail
 from .models import CustomUser
 from .forms import CustomUserCreationForm
+from django.contrib.auth.views import LoginView
+from .forms import EmailAuthenticationForm
 
 class RegisterView(CreateView):
     model = CustomUser
@@ -24,3 +26,7 @@ class RegisterView(CreateView):
 
         return response
 
+
+class CustomLoginView(LoginView):
+    template_name = 'users/login.html'
+    authentication_form = EmailAuthenticationForm
