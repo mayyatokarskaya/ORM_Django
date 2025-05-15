@@ -17,9 +17,10 @@ class RegisterView(CreateView):
         send_mail(
             'Добро пожаловать!',
             'Спасибо за регистрацию на нашем сайте.',
-            'from@example.com',  # Укажи свой адрес отправителя
+            'test.test.Django@yandex.com',
             [self.object.email],
             fail_silently=False,
         )
 
         return response
+

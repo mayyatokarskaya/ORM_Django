@@ -1,5 +1,4 @@
 from django.urls import path
-from .views import RegisterView
 from . import views
 
 app_name = 'users'
