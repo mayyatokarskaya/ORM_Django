@@ -13,9 +13,9 @@
 <main class="container mt-4">
 
     {% if user.is_authenticated %}
-      <div class="alert alert-success" role="alert">
+    <div class="alert alert-success" role="alert">
         Добро пожаловать, {{ user.email }}!
-      </div>
+    </div>
     {% endif %}
 
     {% block content %}
