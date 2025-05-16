@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Профиль пользователя</h2>
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+      <li class="list-group-item"><strong>Имя:</strong> {{ user.first_name }}</li>
+      <li class="list-group-item"><strong>Фамилия:</strong> {{ user.last_name }}</li>
+      <li class="list-group-item"><strong>Телефон:</strong> {{ user.phone }}</li>
+      <li class="list-group-item"><strong>Страна:</strong> {{ user.country }}</li>
+      <li class="list-group-item">
+        <strong>Аватар:</strong><br>
+        {% if user.avatar %}
+          <img src="{{ user.avatar.url }}" alt="Avatar" class="img-thumbnail" width="150">
+        {% else %}
+          <em>Нет изображения</em>
+        {% endif %}
+      </li>
+    </ul>
+    <a class="btn btn-primary mt-3" href="{% url 'users:profile_edit' %}">Редактировать профиль</a>
+  </div>
+{% endblock %}

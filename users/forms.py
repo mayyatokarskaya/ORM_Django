@@ -23,3 +23,8 @@ class EmailAuthenticationForm(AuthenticationForm):
             attrs={"class": "form-control", "placeholder": "Введите пароль"}
         ),
     )
+
+class CustomUserChangeForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'first_name', 'last_name', 'country', 'avatar']

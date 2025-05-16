@@ -12,12 +12,15 @@
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-danger">Выход</button>
         </form>
+
+        <a class="p-2 btn btn-outline-secondary" href="{% url 'users:profile' %}">Профиль</a>
+
         {% else %}
+
         <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
         <a class="p-2 btn btn-outline-success" href="{% url 'users:login' %}">Вход</a>
+
         {% endif %}
-
-
     </nav>
 </header>
 
