@@ -3,12 +3,17 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
-    DetailView, ListView, TemplateView, View,
-    CreateView, UpdateView, DeleteView
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
+    View,
 )
 
-from .models import Product
 from .forms import ProductForm  # подключаем форму
+from .models import Product
 
 
 class HomePageView(ListView):

@@ -8,17 +8,24 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    {% include 'header.html' %}
+{% include 'header.html' %}
 
-    <main class="container mt-4">
-        {% block content %}
-        <!-- Основное содержимое страницы -->
-        {% endblock %}
-    </main>
+<main class="container mt-4">
 
-    {% include 'footer.html' %}
+    {% if user.is_authenticated %}
+      <div class="alert alert-success" role="alert">
+        Добро пожаловать, {{ user.email }}!
+      </div>
+    {% endif %}
 
-    <script src="/static/js/bootstrap.bundle.min.js"></script>
-    {% block extra_js %}{% endblock %}
+    {% block content %}
+    <!-- Основное содержимое страницы -->
+    {% endblock %}
+</main>
+
+{% include 'footer.html' %}
+
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+{% block extra_js %}{% endblock %}
 </body>
 </html>

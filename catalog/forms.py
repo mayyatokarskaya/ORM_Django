@@ -5,8 +5,15 @@ from .models import Product
 
 # Константа с запрещёнными словами
 FORBIDDEN_WORDS = [
-    "казино", "криптовалюта", "крипта", "биржа",
-    "дешево", "бесплатно", "обман", "полиция", "радар",
+    "казино",
+    "криптовалюта",
+    "крипта",
+    "биржа",
+    "дешево",
+    "бесплатно",
+    "обман",
+    "полиция",
+    "радар",
 ]
 
 
@@ -40,12 +47,15 @@ class ProductForm(forms.ModelForm):
         super(ProductForm, self).__init__(*args, **kwargs)
 
         for field in self.fields.values():
-            field.widget.attrs.update({'class': 'form-control'})
+            field.widget.attrs.update({"class": "form-control"})
 
-        self.fields['price'].widget.attrs.update(
-            {'class': 'form-control form-control-sm', 'placeholder': 'Введите цену'})
+        self.fields["price"].widget.attrs.update(
+            {"class": "form-control form-control-sm", "placeholder": "Введите цену"}
+        )
 
-        self.fields['image'].widget.attrs.update({'class': 'form-control-file'})
+        self.fields["image"].widget.attrs.update({"class": "form-control-file"})
 
-        self.fields['name'].widget.attrs.update({'placeholder': 'Название товара'})
-        self.fields['description'].widget.attrs.update({'placeholder': 'Описание товара'})
+        self.fields["name"].widget.attrs.update({"placeholder": "Название товара"})
+        self.fields["description"].widget.attrs.update(
+            {"placeholder": "Описание товара"}
+        )

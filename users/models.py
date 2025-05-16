@@ -31,11 +31,17 @@ class CustomUser(AbstractUser):
     username = None  # Отключаем username
     email = models.EmailField(unique=True, verbose_name="Email")
 
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, verbose_name="Аватар")
-    phone_number = models.CharField(max_length=20, blank=True, null=True, verbose_name="Телефон")
-    country = models.CharField(max_length=100, blank=True, null=True, verbose_name="Страна")
+    avatar = models.ImageField(
+        upload_to="avatars/", blank=True, null=True, verbose_name="Аватар"
+    )
+    phone_number = models.CharField(
+        max_length=20, blank=True, null=True, verbose_name="Телефон"
+    )
+    country = models.CharField(
+        max_length=100, blank=True, null=True, verbose_name="Страна"
+    )
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()

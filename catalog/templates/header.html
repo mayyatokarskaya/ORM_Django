@@ -5,9 +5,16 @@
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_list' %}">Перейти в блог</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_create' %}">Добавить продукт</a>
+        {% if user.is_authenticated %}
 
+        <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">Выход</button>
+        </form>
+        {% else %}
         <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
         <a class="p-2 btn btn-outline-success" href="{% url 'users:login' %}">Вход</a>
+        {% endif %}
 
 
     </nav>
@@ -15,5 +22,6 @@
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">{% block header_title %}Skystore{% endblock %}</h1>
-    <p class="lead">{% block header_subtitle %}Skystore — ваш универсальный онлайн-магазин для покупки игрушек, книг, электроники и многого другого по доступным ценам{% endblock %}</p>
+    <p class="lead">{% block header_subtitle %}Skystore — ваш универсальный онлайн-магазин для покупки игрушек, книг,
+        электроники и многого другого по доступным ценам{% endblock %}</p>
 </div>
