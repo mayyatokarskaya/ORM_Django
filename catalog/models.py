@@ -18,6 +18,11 @@ class Category(models.Model):
 class Product(models.Model):
     """Модель товара"""
 
+    STATUS_CHOICES = [
+        ('draft', 'Черновик'),
+        ('published', 'Опубликован'),
+    ]
+
     name = models.CharField(max_length=100, verbose_name="Наименование")
     description = models.TextField(verbose_name="Описание", blank=True, null=True)
     image = models.ImageField(
@@ -34,7 +39,17 @@ class Product(models.Model):
         auto_now=True, verbose_name="Дата последнего изменения"
     )
 
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='draft',
+        verbose_name="Статус публикации"
+    )
+
     class Meta:
+        permissions = [
+            ("can_unpublish_product", "Может отменять публикацию продукта"),
+        ]
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
         ordering = ["-created_at"]  # Сортировка по дате создания (новые сначала)
