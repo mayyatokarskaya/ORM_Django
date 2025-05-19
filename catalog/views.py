@@ -10,9 +10,11 @@ from django.views.generic import (
     View,
 )
 
-from .forms import ProductForm  # подключаем форму
+from .forms import ProductForm
 from .models import Product
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib import messages
 
 
 class HomePageView(ListView):
@@ -55,3 +57,14 @@ class ContactsView(View):
         name = request.POST.get("name")
         message = request.POST.get("message")
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
+
+
+class ProductUnpublishView(PermissionRequiredMixin, View):
+    permission_required = 'catalog.can_unpublish_product'
+
+    def post(self, request, pk):
+        product = get_object_or_404(Product, pk=pk)
+        product.status = 'draft'
+        product.save()
+        messages.success(request, "Публикация продукта отменена.")
+        return redirect('catalog:product_detail', pk=product.pk)
