@@ -9,7 +9,8 @@
 <div class="row align-items-start">
     <div class="col-lg-6 col-md-12 mb-4">
         {% if product.image %}
-        <img src="{{ product.image.url }}" class="img-fluid rounded shadow-sm w-100" style="max-height: 450px; object-fit: contain;" alt="{{ product.name }}">
+        <img src="{{ product.image.url }}" class="img-fluid rounded shadow-sm w-100"
+             style="max-height: 450px; object-fit: contain;" alt="{{ product.name }}">
         {% endif %}
     </div>
     <div class="col-lg-6 col-md-12">
@@ -21,5 +22,13 @@
         </div>
         <a href="{% url 'catalog:home' %}" class="btn btn-outline-primary mt-4">Назад к списку</a>
     </div>
+    {% if request.user.has_perm "catalog.can_unpublish_product" %}
+    <form method="post" action="{% url 'catalog:product_unpublish' product.pk %}">
+        {% csrf_token %}
+        {% if product.status == 'published' %}
+        <button type="submit">Отменить публикацию</button>
+        {% endif %}
+    </form>
+    {% endif %}
 </div>
 {% endblock %}
