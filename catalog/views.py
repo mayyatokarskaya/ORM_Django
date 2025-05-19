@@ -22,11 +22,28 @@ class HomePageView(ListView):
     template_name = "home.html"
     paginate_by = 4
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated and user.has_perm("catalog.can_unpublish_product"):
+            return Product.objects.all()
+        return Product.objects.filter(status="published")
 
-class ProductDetailView(LoginRequiredMixin, DetailView):
+
+class ProductDetailView(LoginRequiredMixin,DetailView):
     model = Product
     template_name = "product_detail.html"
     context_object_name = "product"
+
+    def get_object(self, queryset=None):
+        product = super().get_object(queryset)
+        user = self.request.user
+
+        if product.status == "draft" and not (
+                user.is_authenticated and user.has_perm("catalog.can_unpublish_product")
+        ):
+            from django.http import Http404
+            raise Http404("Продукт не найден.")
+        return product
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -43,10 +60,11 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("catalog:home")
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Product
     template_name = "product_confirm_delete.html"
     success_url = reverse_lazy("catalog:home")
+    permission_required = 'catalog.delete_product'
 
 
 class ContactsView(View):

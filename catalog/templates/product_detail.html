@@ -19,16 +19,16 @@
         <div class="details mt-4">
             <p><strong>Цена:</strong> {{ product.price }} ₽</p>
             <p><strong>Дата добавления:</strong> {{ product.created_at|date:"d.m.Y" }}</p>
+            <p><strong>Статус:</strong> {{ product.get_status_display }}</p>
         </div>
         <a href="{% url 'catalog:home' %}" class="btn btn-outline-primary mt-4">Назад к списку</a>
-    </div>
-    {% if request.user.has_perm "catalog.can_unpublish_product" %}
-    <form method="post" action="{% url 'catalog:product_unpublish' product.pk %}">
-        {% csrf_token %}
-        {% if product.status == 'published' %}
-        <button type="submit">Отменить публикацию</button>
+
+        {% if perms.catalog.can_unpublish_product and product.status == 'published' %}
+        <form method="post" action="{% url 'catalog:product_unpublish' product.pk %}" class="mt-3">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-warning">Отменить публикацию</button>
+        </form>
         {% endif %}
-    </form>
-    {% endif %}
+    </div>
 </div>
 {% endblock %}
