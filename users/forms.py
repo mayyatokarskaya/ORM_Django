@@ -24,7 +24,8 @@ class EmailAuthenticationForm(AuthenticationForm):
         ),
     )
 
+
 class CustomUserChangeForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['email', 'first_name', 'last_name', 'country', 'avatar']
+        fields = ["email", "first_name", "last_name", "country", "avatar"]

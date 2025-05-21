@@ -1,5 +1,5 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
 
 
 class Category(models.Model):
@@ -20,8 +20,8 @@ class Product(models.Model):
     """Модель товара"""
 
     STATUS_CHOICES = [
-        ('draft', 'Черновик'),
-        ('published', 'Опубликован'),
+        ("draft", "Черновик"),
+        ("published", "Опубликован"),
     ]
 
     name = models.CharField(max_length=100, verbose_name="Наименование")
@@ -43,14 +43,16 @@ class Product(models.Model):
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='products'
+        related_name="products",
+        null=True,
+        blank=True,
     )
 
     status = models.CharField(
         max_length=10,
         choices=STATUS_CHOICES,
-        default='draft',
-        verbose_name="Статус публикации"
+        default="draft",
+        verbose_name="Статус публикации",
     )
 
     class Meta:

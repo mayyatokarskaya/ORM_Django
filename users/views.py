@@ -6,7 +6,8 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
-from .forms import CustomUserCreationForm, EmailAuthenticationForm, CustomUserChangeForm
+from .forms import (CustomUserChangeForm, CustomUserCreationForm,
+                    EmailAuthenticationForm)
 from .models import CustomUser
 
 
@@ -41,13 +42,14 @@ class CustomLoginView(LoginView):
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
-    template_name = 'profile.html'
+    template_name = "profile.html"
+
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = CustomUser
     form_class = CustomUserChangeForm
-    template_name = 'profile_edit.html'
-    success_url = reverse_lazy('catalog:home')  # или на страницу профиля
+    template_name = "profile_edit.html"
+    success_url = reverse_lazy("catalog:home")  # или на страницу профиля
 
     def get_object(self):
         return self.request.user
