@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -29,7 +29,7 @@ class HomePageView(ListView):
         return Product.objects.filter(status="published")
 
 
-class ProductDetailView(LoginRequiredMixin,DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = "product_detail.html"
     context_object_name = "product"
@@ -62,14 +62,28 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     form_class = ProductForm
     template_name = "product_form.html"
     success_url = reverse_lazy("catalog:home")
-    permission_required = 'catalog.change_product'
+
+    # permission_required = 'catalog.change_product'
+    def dispatch(self, request, *args, **kwargs):
+        product = self.get_object()
+        is_moderator = request.user.groups.filter(name="Модератор продуктов").exists()
+        if product.owner != request.user and not is_moderator:
+            return HttpResponseForbidden("Недостаточно прав для редактирования этого продукта.")
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Product
     template_name = "product_confirm_delete.html"
     success_url = reverse_lazy("catalog:home")
-    permission_required = 'catalog.delete_product'
+
+    # permission_required = 'catalog.delete_product'
+    def dispatch(self, request, *args, **kwargs):
+        product = self.get_object()
+        is_moderator = request.user.groups.filter(name="Модератор продуктов").exists()
+        if product.owner != request.user and not is_moderator:
+            return HttpResponseForbidden("Недостаточно прав для удаления этого продукта.")
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ContactsView(View):
