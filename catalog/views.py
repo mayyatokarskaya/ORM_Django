@@ -9,6 +9,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 
 from .forms import ProductForm
 from .models import Product
+from django.core.cache import cache
 
 
 class HomePageView(ListView):
@@ -19,8 +20,8 @@ class HomePageView(ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated and user.has_perm("catalog.can_unpublish_product"):
-            return Product.objects.all()
-        return Product.objects.filter(status="published")
+            return cache.get_or_set("all_products", lambda: list(Product.objects.all()), 300)
+        return cache.get_or_set("published_products", lambda: list(Product.objects.filter(status="published")), 300)
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -29,15 +30,21 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "product"
 
     def get_object(self, queryset=None):
-        product = super().get_object(queryset)
-        user = self.request.user
+        pk = self.kwargs["pk"]
+        cache_key = f"product_detail_{pk}"
+        product = cache.get(cache_key)
 
+        if not product:
+            product = super().get_object(queryset)
+            cache.set(cache_key, product, timeout=60 * 5)  # Кеш на 5 минут
+
+        user = self.request.user
         if product.status == "draft" and not (
-            user.is_authenticated and user.has_perm("catalog.can_unpublish_product")
+                user.is_authenticated and user.has_perm("catalog.can_unpublish_product")
         ):
             from django.http import Http404
-
             raise Http404("Продукт не найден.")
+
         return product
 
 
@@ -69,7 +76,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class ProductDeleteView(LoginRequiredMixin,DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = "product_confirm_delete.html"
     success_url = reverse_lazy("catalog:home")
