@@ -10,6 +10,8 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 from .forms import ProductForm
 from .models import Product
 from django.core.cache import cache
+from .services import get_products_by_category
+from .models import Category
 
 
 class HomePageView(ListView):
@@ -112,3 +114,13 @@ class ProductUnpublishView(PermissionRequiredMixin, View):
         product.save()
         messages.success(request, "Публикация продукта отменена.")
         return redirect("catalog:product_detail", pk=product.pk)
+
+
+class CategoryProductsView(View):
+    def get(self, request, category_id):
+        category = get_object_or_404(Category, id=category_id)
+        products = get_products_by_category(category_id)
+        return render(request, "category_products.html", {
+            "category": category,
+            "products": products
+        })

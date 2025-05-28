@@ -21,7 +21,13 @@
             <p><strong>Дата добавления:</strong> {{ product.created_at|date:"d.m.Y" }}</p>
             <p><strong>Статус:</strong> {{ product.get_status_display }}</p>
         </div>
-        <a href="{% url 'catalog:home' %}" class="btn btn-outline-primary mt-4">Назад к списку</a>
+
+        <div class="d-flex flex-wrap gap-2 align-items-center mt-4">
+            <a href="{% url 'catalog:home' %}" class="btn btn-outline-primary">Назад к списку</a>
+            <a href="{% url 'catalog:category_products' product.category.id %}" class="btn btn-success">
+                Смотреть другие товары в категории "{{ product.category.name }}"
+            </a>
+        </div>
 
         {% if perms.catalog.can_unpublish_product and product.status == 'published' %}
         <form method="post" action="{% url 'catalog:product_unpublish' product.pk %}" class="mt-3">
