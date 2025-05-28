@@ -12,6 +12,7 @@ from .models import Product
 from django.core.cache import cache
 from .services import get_products_by_category
 from .models import Category
+from .utils import get_products_by_category
 
 
 class HomePageView(ListView):
@@ -117,6 +118,7 @@ class ProductUnpublishView(PermissionRequiredMixin, View):
 
 
 class CategoryProductsView(View):
+
     def get(self, request, category_id):
         category = get_object_or_404(Category, id=category_id)
         products = get_products_by_category(category_id)
@@ -124,3 +126,5 @@ class CategoryProductsView(View):
             "category": category,
             "products": products
         })
+
+
