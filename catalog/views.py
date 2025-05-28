@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
+from django.core.cache import cache
 from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
@@ -8,10 +9,8 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView, View)
 
 from .forms import ProductForm
-from .models import Product
-from django.core.cache import cache
+from .models import Category, Product
 from .services import get_products_by_category
-from .models import Category
 from .utils import get_products_by_category
 
 
@@ -23,8 +22,14 @@ class HomePageView(ListView):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated and user.has_perm("catalog.can_unpublish_product"):
-            return cache.get_or_set("all_products", lambda: list(Product.objects.all()), 300)
-        return cache.get_or_set("published_products", lambda: list(Product.objects.filter(status="published")), 300)
+            return cache.get_or_set(
+                "all_products", lambda: list(Product.objects.all()), 300
+            )
+        return cache.get_or_set(
+            "published_products",
+            lambda: list(Product.objects.filter(status="published")),
+            300,
+        )
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -43,9 +48,10 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
 
         user = self.request.user
         if product.status == "draft" and not (
-                user.is_authenticated and user.has_perm("catalog.can_unpublish_product")
+            user.is_authenticated and user.has_perm("catalog.can_unpublish_product")
         ):
             from django.http import Http404
+
             raise Http404("Продукт не найден.")
 
         return product
@@ -122,9 +128,8 @@ class CategoryProductsView(View):
     def get(self, request, category_id):
         category = get_object_or_404(Category, id=category_id)
         products = get_products_by_category(category_id)
-        return render(request, "category_products.html", {
-            "category": category,
-            "products": products
-        })
-
-
+        return render(
+            request,
+            "category_products.html",
+            {"category": category, "products": products},
+        )

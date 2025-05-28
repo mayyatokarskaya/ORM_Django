@@ -7,35 +7,35 @@
 
 {% block content %}
 <div class="container">
-  {% if products %}
+    {% if products %}
     <div class="row">
-      {% for product in products %}
+        {% for product in products %}
         <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card h-100 shadow-sm">
-            {% if product.image %}
-              <img src="{{ product.image.url }}" class="card-img-top p-3"
-                   style="height: 200px; object-fit: contain;"
-                   alt="{{ product.name }}">
-            {% endif %}
-            <div class="card-body">
-              <h5 class="card-title">{{ product.name }}</h5>
-              <p class="card-text text-muted">{{ product.description|truncatechars:100 }}</p>
-              <p class="text-primary"><strong>Цена: {{ product.price }} ₽</strong></p>
+            <div class="card h-100 shadow-sm">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top p-3"
+                     style="height: 200px; object-fit: contain;"
+                     alt="{{ product.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text text-muted">{{ product.description|truncatechars:100 }}</p>
+                    <p class="text-primary"><strong>Цена: {{ product.price }} ₽</strong></p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="{% url 'catalog:product_detail' product.pk %}"
+                       class="btn btn-outline-primary w-100">
+                        Подробнее
+                    </a>
+                </div>
             </div>
-            <div class="card-footer bg-transparent">
-              <a href="{% url 'catalog:product_detail' product.pk %}"
-                 class="btn btn-outline-primary w-100">
-                Подробнее
-              </a>
-            </div>
-          </div>
         </div>
-      {% endfor %}
+        {% endfor %}
     </div>
-  {% else %}
+    {% else %}
     <div class="alert alert-info" role="alert">
-      В этой категории пока нет опубликованных товаров.
+        В этой категории пока нет опубликованных товаров.
     </div>
-  {% endif %}
+    {% endif %}
 </div>
 {% endblock %}
